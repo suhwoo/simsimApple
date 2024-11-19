@@ -47,12 +47,14 @@
         "columnIds": [
           "0K5iyYE-WBxxH7vf-1cEB",
           "wRVwyPgynZgdV5en9_tfw",
-          "ZVvZWFhiH-xcbmCwb9Xho"
+          "ZVvZWFhiH-xcbmCwb9Xho",
+          "OlNgdHOOx7I6KC478DM5N"
         ],
         "seqColumnIds": [
           "0K5iyYE-WBxxH7vf-1cEB",
           "wRVwyPgynZgdV5en9_tfw",
-          "ZVvZWFhiH-xcbmCwb9Xho"
+          "ZVvZWFhiH-xcbmCwb9Xho",
+          "OlNgdHOOx7I6KC478DM5N"
         ],
         "ui": {
           "x": 601,
@@ -63,7 +65,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1731980035459,
+          "updateAt": 1731989103852,
           "createAt": 1731979669983
         }
       },
@@ -78,15 +80,15 @@
           "7_QFUFgeRrQf3hmXVC9p0"
         ],
         "ui": {
-          "x": 164,
-          "y": 216,
+          "x": 121,
+          "y": 169,
           "zIndex": 6,
           "widthName": 60,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1731979709752,
+          "updateAt": 1731989104052,
           "createAt": 1731979687943
         }
       }
@@ -96,19 +98,19 @@
         "id": "0K5iyYE-WBxxH7vf-1cEB",
         "tableId": "9cfU1dnXnZVULc7sHjSr4",
         "name": "user_id",
-        "comment": "auto",
+        "comment": "자동으로 설정되는 임의의 user의 번호",
         "dataType": "INT",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 205,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1731980131038,
+          "updateAt": 1731989150489,
           "createAt": 1731979704868
         }
       },
@@ -116,19 +118,19 @@
         "id": "wRVwyPgynZgdV5en9_tfw",
         "tableId": "9cfU1dnXnZVULc7sHjSr4",
         "name": "name",
-        "comment": "",
-        "dataType": "text",
-        "default": "",
+        "comment": "사용자가 직접 설정한 닉네임",
+        "dataType": "TEXT",
+        "default": "\"사용자\"",
         "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 156,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1731980030036,
+          "updateAt": 1731989155883,
           "createAt": 1731979707360
         }
       },
@@ -156,20 +158,40 @@
         "id": "ZVvZWFhiH-xcbmCwb9Xho",
         "tableId": "9cfU1dnXnZVULc7sHjSr4",
         "name": "id",
-        "comment": "",
-        "dataType": "",
+        "comment": "사용자가 직접 설정한 로그인 아이디",
+        "dataType": "TEXT",
         "default": "",
-        "options": 0,
+        "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
-          "widthComment": 60,
+          "widthComment": 195,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1731980135397,
+          "updateAt": 1731989161375,
           "createAt": 1731980035459
+        }
+      },
+      "OlNgdHOOx7I6KC478DM5N": {
+        "id": "OlNgdHOOx7I6KC478DM5N",
+        "tableId": "9cfU1dnXnZVULc7sHjSr4",
+        "name": "password",
+        "comment": "사용자가 직접 설정한 로그인 비밀번호",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 207,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1731989187798,
+          "createAt": 1731989103852
         }
       }
     },
@@ -201,7 +223,7 @@
         "name": 1731980131037,
         "dataType": 1731979999977,
         "options(notNull)": 1731980006471,
-        "comment": 1731980008714
+        "comment": 1731989150489
       }
     ],
     "wRVwyPgynZgdV5en9_tfw": [
@@ -210,7 +232,9 @@
       -1,
       {
         "name": 1731980015719,
-        "dataType": 1731980030036
+        "dataType": 1731989113245,
+        "default": 1731989133706,
+        "comment": 1731989155882
       }
     ],
     "7_QFUFgeRrQf3hmXVC9p0": [
@@ -224,7 +248,21 @@
       1731980035458,
       -1,
       {
-        "name": 1731980135397
+        "name": 1731980135397,
+        "dataType": 1731989116063,
+        "options(notNull)": 1731989136759,
+        "comment": 1731989161374
+      }
+    ],
+    "OlNgdHOOx7I6KC478DM5N": [
+      "tableColumnEntities",
+      1731989103849,
+      -1,
+      {
+        "name": 1731989109144,
+        "dataType": 1731989118825,
+        "options(notNull)": 1731989137314,
+        "comment": 1731989187797
       }
     ]
   }
