@@ -1,7 +1,0 @@
-[table : user]
-[column]
-user_id (auto increase) : 자동으로 설정되는 임의의 user의 번호
-name : 사용자가 직접 설정한 닉네임
-id : 로그인시 사용되는 아이디
-password : 로그인시 사용되는 암호
-
