@@ -1,0 +1,1 @@
+docker build -t apple_mysql8:latest .
