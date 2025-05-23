@@ -1,0 +1,1 @@
+docker build -t custom-mysql:8.0 .
