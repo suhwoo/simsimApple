@@ -1,0 +1,36 @@
+# Dart / Flutter
+.dart_tool/
+build/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+README.md
+analysis_options.yaml
+
+# Test files
+test/ 
