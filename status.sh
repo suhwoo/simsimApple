@@ -486,9 +486,10 @@ show_interactive_menu() {
     echo "6) 🗄️  MySQL만 재시작"
     echo "7) 🧪 API 테스트 실행"
     echo "8) 📊 실시간 로그 확인"
+    echo "9) 🗄️  데이터베이스 관리"
     echo "0) 👋 종료"
     echo ""
-    echo -n "선택하세요 (0-8): "
+    echo -n "선택하세요 (0-9): "
 }
 
 # 메뉴 선택 실행
@@ -540,12 +541,22 @@ execute_menu_choice() {
             echo "🔍 로그 모니터링 시작..."
             tail -f logs/*.log 2>/dev/null || echo "로그 파일이 없습니다."
             ;;
+        9)
+            echo -e "${YELLOW}🗄️  데이터베이스 관리 실행 중...${NC}"
+            echo ""
+            if [ -f "scripts/db-check.sh" ]; then
+                ./scripts/db-check.sh
+            else
+                echo -e "${RED}❌ scripts/db-check.sh 파일을 찾을 수 없습니다.${NC}"
+                echo "   스크립트를 생성하려면 관리자에게 문의하세요."
+            fi
+            ;;
         0)
             echo -e "${GREEN}👋 Apple 프로젝트 관리자를 종료합니다.${NC}"
             exit 0
             ;;
         *)
-            echo -e "${RED}❌ 잘못된 선택입니다. 0-8 사이의 숫자를 입력해주세요.${NC}"
+            echo -e "${RED}❌ 잘못된 선택입니다. 0-9 사이의 숫자를 입력해주세요.${NC}"
             ;;
     esac
 }
