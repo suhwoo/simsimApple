@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/auth_screen.dart';
 
-void main() {
+void main() async {
+  // Flutter 바인딩 초기화
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // .env 파일 로드
+  try {
+    await dotenv.load(fileName: ".env");
+    print('🔧 [DEBUG] .env 파일 로드 성공');
+  } catch (e) {
+    print('⚠️ [WARNING] .env 파일 로드 실패: $e');
+    print('💡 [INFO] .env_example을 참고하여 .env 파일을 생성하세요');
+  }
+  
   runApp(const MyApp());
 }
 

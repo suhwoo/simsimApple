@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import simsimSa.apple.service.UserService;
 import simsimSa.apple.dto.LoginRequest;
 import simsimSa.apple.dto.RegisterRequest;
+import simsimSa.apple.dto.GoogleLoginRequest;
 import simsimSa.apple.dto.ApiResponse;
 import simsimSa.apple.dto.UserResponse;
 
@@ -52,6 +53,33 @@ public class UserController {
         ApiResponse<UserResponse> response = userService.checkUser(request.getId(), request.getPassword());
         return ResponseEntity
             .status(response.isSuccess() ? 200 : 401)
+            .body(response);
+    }
+
+    @PostMapping("/google-login")
+    public ResponseEntity<ApiResponse<UserResponse>> googleLogin(@RequestBody GoogleLoginRequest request) {
+        // 입력값 검증
+        if (request.getGoogleId() == null || request.getGoogleId().trim().isEmpty()) {
+            return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.error("Google ID가 필요합니다.", "INVALID_GOOGLE_ID"));
+        }
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.error("이메일이 필요합니다.", "INVALID_EMAIL"));
+        }
+
+        // Google 로그인 처리
+        ApiResponse<UserResponse> response = userService.processGoogleLogin(
+            request.getGoogleId(),
+            request.getEmail(),
+            request.getName(),
+            request.getAccessToken()
+        );
+        
+        return ResponseEntity
+            .status(response.isSuccess() ? 200 : 400)
             .body(response);
     }
 } 
