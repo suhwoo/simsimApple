@@ -15,6 +15,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _passwordController = TextEditingController();
   bool _isLogin = true;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   final AuthService _authService = AuthService();
 
   @override
@@ -30,6 +31,78 @@ class _AuthScreenState extends State<AuthScreen> {
       _idController.clear();
       _passwordController.clear();
     });
+  }
+
+  // Google 로그인 처리
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isGoogleLoading = true;
+    });
+
+    try {
+      final result = await _authService.signInWithGoogle();
+      
+      if (result['success']) {
+        String userId = result['userId'] ?? result['userEmail'];
+        String userName = result['userName'] ?? '';
+        String authType = result['authType'] ?? 'GOOGLE';
+        
+        print('🎉 [DEBUG] Google 로그인 성공! userId: $userId, authType: $authType');
+        
+        // Google 로그인 성공 시 Welcome 화면으로 이동
+        if (mounted) {
+          print('🔧 [DEBUG] Welcome 화면으로 이동 시작...');
+          try {
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => WelcomeScreen(
+                  userId: userId,
+                  userName: userName,
+                  welcomeType: 'google_login',
+                ),
+              ),
+            );
+            print('🔧 [DEBUG] Welcome 화면에서 돌아옴');
+            
+            // Welcome 화면에서 돌아온 후 입력 필드 정리
+            if (mounted) {
+              setState(() {
+                _idController.clear();
+                _passwordController.clear();
+              });
+            }
+          } catch (e) {
+            print('🚨 [ERROR] Welcome 화면 이동 실패: $e');
+          }
+          return; // 스낵바를 표시하지 않고 바로 리턴
+        }
+      } else {
+        // Google 로그인 실패 시 에러 메시지 표시
+        if (mounted && result['code'] != 'LOGIN_CANCELLED') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result['message']),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Google 로그인 중 오류가 발생했습니다: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isGoogleLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> _submitForm() async {
@@ -178,6 +251,64 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                     const SizedBox(height: 32),
+                    
+                    // Google 로그인 버튼 (로그인 모드일 때만 표시)
+                    if (_isLogin) ...[
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: ElevatedButton.icon(
+                          onPressed: _isGoogleLoading ? null : _handleGoogleSignIn,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black87,
+                            side: BorderSide(color: Colors.grey.shade300),
+                            elevation: 1,
+                          ),
+                          icon: _isGoogleLoading 
+                              ? SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey.shade600),
+                                  ),
+                                )
+                              : Image.network(
+                                  'https://developers.google.com/identity/images/g-logo.png',
+                                  width: 18,
+                                  height: 18,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(Icons.account_circle, size: 18, color: Colors.grey.shade600);
+                                  },
+                                ),
+                          label: Text(
+                            _isGoogleLoading ? 'Google 로그인 중...' : 'Google로 로그인',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      
+                      // 구분선
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: Colors.grey.shade300)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              '또는',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Expanded(child: Divider(color: Colors.grey.shade300)),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                    ],
                     
                     // 아이디 입력
                     TextFormField(

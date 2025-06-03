@@ -3,6 +3,7 @@ package simsimSa.apple.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import simsimSa.apple.model.User;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -12,4 +13,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     // findAll()
     // deleteById(String id)
     // 등등...
+    
+    // Google 로그인 관련 메서드들
+    Optional<User> findByGoogleId(String googleId);
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
+    boolean existsByGoogleId(String googleId);
 } 
